@@ -140,10 +140,13 @@ public class ScheduleAgreementService {
                 // Otherwise, use the 1st of the current processing month.
                 if (firstIteration) {
                     newPlanLine.setPlannedDeliveryDate(originalRequestedDate);
+                    newPlanLine.setStatus(DeliveryStatus.PLANNED);
+
                 } else {
                     newPlanLine.setPlannedDeliveryDate(currentProcessingDate.withDayOfMonth(1));
+                    newPlanLine.setStatus(DeliveryStatus.DEFERRED); // Parts deferred are DEFERRED
                 }
-                newPlanLine.setStatus(DeliveryStatus.PLANNED); // Parts scheduled are PLANNED
+                
                 newPlanLine.setSubmissionDate(LocalDate.now());
 
                 DeliveryPlanLine savedLine = deliveryPlanLineRepository.save(newPlanLine);
