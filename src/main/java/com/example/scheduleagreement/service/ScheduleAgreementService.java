@@ -89,7 +89,25 @@ public class ScheduleAgreementService {
         while (remainingQuantityToSchedule > 0) {
             YearMonth currentYearMonth = YearMonth.from(currentProcessingDate);
             LocalDate endOfMonth = currentYearMonth.atEndOfMonth();
+            LocalDate startOfMonth = currentYearMonth.atDay(1);
 
+            
+            long monthlyDemand = demandLineRepository.sumRequestedQuantityBetweenDates(
+                sa, startOfMonth, endOfMonth);
+            
+            if (monthlyDemand == 0) { // 修改此处，判断是否等于0
+                // 当前月份没有需求，取消订单
+                // 您可以根据需要决定是否真的抛出异常，或者只是清空已创建的计划行并返回
+                // 例如，如果希望静默处理，可以这样：
+                // createdPlanLines.clear(); // 清空已创建的计划行
+                // break; // 跳出循环，不再尝试后续月份
+                throw new ResourceNotFoundException("当前月份(" + currentYearMonth + ")没有需求，订单无法继续处理");
+            }
+            
+            
+            
+            
+            
             // 1. Cumulative Demand up to end of current processing month
             long cumulativeDemandByMonthEnd = demandLineRepository.sumRequestedQuantityUpToDate(sa, endOfMonth);
 

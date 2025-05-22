@@ -16,6 +16,11 @@ public interface DemandLineRepository extends JpaRepository<DemandLine, Long> {
     @Query("SELECT COALESCE(SUM(dl.requestedQuantity), 0) FROM DemandLine dl " +
            "WHERE dl.scheduleAgreement = :sa AND dl.requestedDate <= :endDate")
     Long sumRequestedQuantityUpToDate(@Param("sa") ScheduleAgreement sa, @Param("endDate") LocalDate endDate);
+
+    // New method to get demand between two dates
+    @Query("SELECT COALESCE(SUM(dl.requestedQuantity), 0) FROM DemandLine dl " +
+           "WHERE dl.scheduleAgreement = :sa AND dl.requestedDate >= :startDate AND dl.requestedDate <= :endDate")
+    Long sumRequestedQuantityBetweenDates(@Param("sa") ScheduleAgreement sa, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }
 
 
