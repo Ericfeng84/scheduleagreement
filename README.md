@@ -1,4 +1,4 @@
-这是一个基于 Spring Boot 实现您描述的 Schedule Agreement (计划协议) 模块的方案。它将包含以下核心功能：
+这是一个基于 Spring Boot 实现的 Schedule Agreement (计划协议) 模块的方案。它将包含以下核心功能：
 
 1.  **创建计划协议 (Schedule Agreement)**:
     *   定义客户、物料、总体承诺数量 (Target Quantity) 等基本信息。
